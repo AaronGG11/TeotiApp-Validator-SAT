@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import fire from './firebase/Firebase';
 import {BrowserRouter as Router, Link, Switch, Route} from 'react-router-dom';
-import './App.css';
+import './styles/App.css';
+import 'bootstrap/dist/css/bootstrap.css'
+
 import Login from "./components/login/Login";
 import Header from './components/header/Header';
 
@@ -68,6 +70,7 @@ function App() {
 
   const handleLogout = () => {
     fire.auth().signOut();
+    setUser(null);
   }
 
   const authListener = () => {
@@ -91,21 +94,27 @@ function App() {
 
   return (
     <div className="App">
-      <Login 
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        handleLogin={handleLogin}
-        handleSignUp={handleSignUp}
-        hasAccount={hasAccount}
-        sethasAccount={sethasAccount}
-        errorEmail={errorEmail}
-        seterrorEmail={seterrorEmail}
-        errorPassword={errorPassword}
-        seterrorPassword={seterrorPassword}
-
-      />
+      {user ? (
+          <Header 
+            handleLogout={handleLogout}
+          />
+        ) : (
+          <Login 
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            handleLogin={handleLogin}
+            handleSignUp={handleSignUp}
+            hasAccount={hasAccount}
+            sethasAccount={sethasAccount}
+            errorEmail={errorEmail}
+            seterrorEmail={seterrorEmail}
+            errorPassword={errorPassword}
+            seterrorPassword={seterrorPassword}
+          />
+        )
+      }
     </div> 
   );
 }
