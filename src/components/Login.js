@@ -2,7 +2,6 @@ import React from 'react'
 import {Button, Alert, Row, Col} from "react-bootstrap"
 import LoginImage from "./LoginImage"
 import LoginForm from "./LoginForm"
-import './../styles/login.css';
 
 function Login(props) {
     const {
