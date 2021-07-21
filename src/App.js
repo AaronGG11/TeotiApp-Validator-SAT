@@ -4,8 +4,8 @@ import {BrowserRouter as Router, Link, Switch, Route} from 'react-router-dom';
 import './styles/App.css';
 import 'bootstrap/dist/css/bootstrap.css'
 
-import Login from "./components/login/Login";
-import Header from './components/header/Header';
+import Login from "./components/Login";
+import Header from './components//Header';
 
 
 function App() {

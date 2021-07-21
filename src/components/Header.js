@@ -1,6 +1,6 @@
 import React from 'react'
 import {Navbar, Nav, NavDropdown, Container, Button} from 'react-bootstrap'
-import logo from "./../../assets/svg-pyramid-1.svg"
+import logo from "./../assets/svg-pyramid-1.svg"
 
 function Header({handleLogout}) {
     return (
