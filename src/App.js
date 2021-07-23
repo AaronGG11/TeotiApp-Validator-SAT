@@ -1,12 +1,27 @@
 import React, {useState, useEffect} from 'react';
-import fire from './firebase/Firebase';
 import {BrowserRouter as Router, Link, Switch, Route} from 'react-router-dom';
+
+import firebaseApp from './firebase/Firebase';
+import firebase from "firebase/app";
+import "firebase/auth"
+import "firebase/firestore";
+
 import './styles/App.css';
 import 'bootstrap/dist/css/bootstrap.css'
 
 import Login from "./components/Login";
 import Header from './components//Header';
 
+import Approved from "./components/Approved"
+import Rejected from "./components/Rejected"
+import Pending from "./components/Pending"
+import Welcome from "./components/Welcome"
+
+import {handleSellerList} from "./firebase/Actions"
+
+
+
+const db = firebase.firestore(firebaseApp)
 
 function App() {
   const [user, setUser] = useState(null);
@@ -15,6 +30,10 @@ function App() {
   const [errorEmail, seterrorEmail] = useState("");
   const [errorPassword, seterrorPassword] = useState("");
   const [hasAccount, sethasAccount] = useState(false);
+
+  const [pending, setPending] = useState([])
+  const [rejected, setRejected] = useState([])
+  const [approved, setApproved] = useState([])
 
 
   const clearInputs = () => {
@@ -30,7 +49,7 @@ function App() {
   const handleLogin = () => {
     clearErrors();
 
-    fire
+    firebaseApp
       .auth()
       .signInWithEmailAndPassword(email, password)
       .catch(error => {
@@ -43,7 +62,6 @@ function App() {
           case  "auth/wrong-password":
             seterrorPassword(error.message);
             break;
-           
         }
       })
   }
@@ -51,7 +69,7 @@ function App() {
   const handleSignUp = () => {
     clearErrors();
 
-    fire
+    firebaseApp
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .catch(error => {
@@ -69,12 +87,12 @@ function App() {
   }
 
   const handleLogout = () => {
-    fire.auth().signOut();
+    firebaseApp.auth().signOut();
     setUser(null);
   }
 
   const authListener = () => {
-    fire
+    firebaseApp
     .auth()
     .onAuthStateChanged(user => {
       if(user){
@@ -86,18 +104,35 @@ function App() {
     })
   }
 
+
   useEffect(() => {
     authListener();
   }, [])
 
 
-
   return (
     <div className="App">
       {user ? (
-          <Header 
-            handleLogout={handleLogout}
-          />
+          <Router>
+            <Header 
+              handleLogout={handleLogout}
+            />
+            <Switch>
+              <Route exact path="/Welcome">
+                <Welcome/>
+              </Route>
+              <Route path="/Pending">
+                <Pending />
+              </Route>
+              <Route path="/Approved">
+                <Approved />
+              </Route>
+              <Route path="/Rejected" >
+                <Rejected />
+              </Route>
+            </Switch>
+          </Router>
+          
         ) : (
           <Login 
             email={email}
