@@ -37,7 +37,9 @@ function Login(props) {
                     seterrorPassword={seterrorPassword}
                 />
             </Col>
-            <Col xs={6}><LoginImage /></Col>
+            <Col xs={6}>
+                <LoginImage />
+            </Col>
         </Row>
     )
 }

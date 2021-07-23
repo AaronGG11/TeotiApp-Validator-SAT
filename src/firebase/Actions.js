@@ -26,8 +26,29 @@ export const handleSellerList = async (status_type) => {
       console.log('====================================');
     })
     .finally(() => {
-      alert(final_result.length)
+      //alert(final_result.length)
     })
+
+    return final_result
+}
+
+
+export const handleUpdateStatusSeller = (new_status_type, seller_doc) => {
+  db
+  .collection("users")
+  .doc(seller_doc)
+  .update({
+    status: new_status_type
+  })
+  .then((response) => {
+    
+  })
+  .catch((error) => {
+
+  })
+  .finally(()=> {
+
+  })
 }
 
 
