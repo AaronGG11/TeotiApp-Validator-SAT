@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {BrowserRouter as Router, Link, Switch, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Link, Switch, Route, Redirect} from 'react-router-dom';
 
 import firebaseApp from './firebase/Firebase';
 import firebase from "firebase/app";
@@ -117,10 +117,8 @@ function App() {
             <Header 
               handleLogout={handleLogout}
             />
+
             <Switch>
-              <Route exact path="/Welcome">
-                <Welcome/>
-              </Route>
               <Route path="/Pending">
                 <Pending />
               </Route>
@@ -129,6 +127,12 @@ function App() {
               </Route>
               <Route path="/Rejected" >
                 <Rejected />
+              </Route>
+              <Route exact path="/">
+                <Redirect to="/Welcome"/>
+              </Route>
+              <Route path="/Welcome">
+                <Welcome/>
               </Route>
             </Switch>
           </Router>
